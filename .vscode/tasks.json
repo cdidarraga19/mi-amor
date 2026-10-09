@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Abrir proyecto en el navegador",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoProfile",
+                "-NonInteractive",
+                "-Command",
+                "Invoke-Item -LiteralPath (Join-Path -Path (Get-Location).Path -ChildPath 'index.html')"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "dedicated",
+                "close": true
+            }
+        }
+    ]
+}

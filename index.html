@@ -6,191 +6,29 @@
 <title>Para Mi Cielito</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --pink-light:#ffe4ec;
-    --pink-soft:#ffd1dc;
-    --pink-main:#ff8fa3;
-    --pink-strong:#ff6f91;
-    --plum:#5a3350;
-    --white:#fffafc;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:'Poppins',sans-serif;
-    background:linear-gradient(180deg,var(--pink-light),var(--white) 20%);
-    color:var(--plum);
-    overflow-x:hidden;
-  }
-  h1,h2,h3{font-family:'Dancing Script',cursive;}
-  a{text-decoration:none;color:inherit;}
-
-  /* ---------- Corazones flotantes ---------- */
-  #hearts-container{
-    position:fixed;top:0;left:0;width:100%;height:100%;
-    pointer-events:none;overflow:hidden;z-index:1;
-  }
-  .heart{
-    position:absolute;bottom:-10%;font-size:1.5rem;
-    animation:floatUp linear forwards;
-    opacity:.8;
-  }
-  @keyframes floatUp{
-    0%{transform:translateY(0) rotate(0deg);opacity:.9;}
-    100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}
-  }
-
-  /* ---------- Navegación ---------- */
-  nav{
-    position:fixed;top:0;left:0;width:100%;
-    display:flex;justify-content:space-between;align-items:center;
-    padding:14px 30px;background:rgba(255,250,252,.85);
-    backdrop-filter:blur(6px);z-index:100;
-    box-shadow:0 2px 12px rgba(255,111,145,.15);
-  }
-  .logo{font-family:'Dancing Script',cursive;font-size:1.6rem;color:var(--pink-strong);font-weight:700;}
-  .nav-links{display:flex;gap:22px;}
-  .nav-links a{font-size:.95rem;font-weight:500;transition:color .2s;}
-  .nav-links a:hover{color:var(--pink-strong);}
-  #menu-toggle{display:none;font-size:1.6rem;background:none;border:none;color:var(--pink-strong);cursor:pointer;}
-
-  @media (max-width:720px){
-    .nav-links{
-      position:absolute;top:100%;right:0;left:0;
-      background:var(--white);flex-direction:column;
-      align-items:center;gap:0;
-      max-height:0;overflow:hidden;transition:max-height .3s ease;
-    }
-    .nav-links.open{max-height:400px;padding:10px 0;}
-    .nav-links a{padding:12px 0;width:100%;text-align:center;}
-    #menu-toggle{display:block;}
-  }
-
-  section{
-    position:relative;z-index:2;
-    padding:110px 20px 70px;
-    max-width:1000px;margin:0 auto;
-    text-align:center;
-  }
-
-  /* ---------- Hero ---------- */
-  #inicio{
-    min-height:100vh;display:flex;flex-direction:column;
-    justify-content:center;align-items:center;padding-top:0;
-  }
-  #inicio h1{font-size:3.2rem;color:var(--pink-strong);margin-bottom:10px;}
-  #inicio p{font-size:1.15rem;max-width:520px;margin:0 auto 30px;}
-  .btn{
-    display:inline-block;background:var(--pink-strong);color:#fff;
-    padding:14px 34px;border-radius:40px;font-weight:600;
-    box-shadow:0 8px 20px rgba(255,111,145,.4);
-    transition:transform .2s, box-shadow .2s;border:none;cursor:pointer;font-size:1rem;
-  }
-  .btn:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(255,111,145,.5);}
-
-  h2.section-title{font-size:2.4rem;color:var(--pink-strong);margin-bottom:8px;}
-  .section-sub{margin-bottom:40px;color:#8a6070;font-size:.95rem;}
-
-  /* ---------- Contador ---------- */
-  #contador-caja{
-    display:flex;flex-wrap:wrap;gap:18px;justify-content:center;
-  }
-  .contador-item{
-    background:var(--white);border-radius:18px;padding:22px 20px;
-    min-width:100px;box-shadow:0 6px 20px rgba(255,143,163,.25);
-  }
-  .contador-item span{display:block;font-size:2.2rem;font-weight:600;color:var(--pink-strong);}
-  .contador-item small{color:#8a6070;font-size:.8rem;letter-spacing:.5px;}
-
-  /* ---------- Cartas ---------- */
-  .cartas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;}
-  .carta{
-    background:var(--white);border-radius:18px;padding:26px;
-    box-shadow:0 6px 20px rgba(255,143,163,.2);cursor:pointer;
-    text-align:left;transition:transform .25s;
-  }
-  .carta:hover{transform:translateY(-6px);}
-  .carta h3{color:var(--pink-strong);font-size:1.5rem;margin-bottom:10px;}
-  .carta p{font-size:.9rem;line-height:1.55;max-height:80px;overflow:hidden;transition:max-height .4s ease;position:relative;}
-  .carta.abierta p{max-height:600px;}
-  .carta .ver-mas{display:block;margin-top:10px;font-size:.8rem;color:var(--pink-strong);font-weight:600;}
-
-  /* ---------- Galería ---------- */
-  .galeria-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
-  .foto-box{
-    aspect-ratio:1/1;border-radius:16px;overflow:hidden;position:relative;
-    background:linear-gradient(135deg,var(--pink-soft),var(--pink-light));
-    box-shadow:0 6px 16px rgba(255,143,163,.25);
-  }
-  .foto-box img{width:100%;height:100%;object-fit:cover;display:block;}
-  .foto-box.no-photo img{display:none;}
-  .foto-box.no-photo::after{
-    content:"📷 Agrega tu foto aquí";
-    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    text-align:center;font-size:.85rem;color:#a5637a;padding:10px;
-  }
-  .galeria-tip{margin-top:20px;font-size:.85rem;color:#8a6070;}
-
-  /* ---------- Línea del tiempo ---------- */
-  .timeline{position:relative;margin:0 auto;max-width:700px;text-align:left;}
-  .timeline::before{
-    content:"";position:absolute;left:20px;top:0;bottom:0;width:3px;
-    background:var(--pink-soft);
-  }
-  .timeline-item{position:relative;padding:0 0 34px 55px;}
-  .timeline-item::before{
-    content:"💗";position:absolute;left:6px;top:0;font-size:1.3rem;
-  }
-  .timeline-item .fecha{color:var(--pink-strong);font-weight:600;font-size:.85rem;}
-  .timeline-item h3{font-size:1.3rem;margin:2px 0 4px;}
-  .timeline-item p{font-size:.9rem;color:#6a4457;}
-
-  /* ---------- Razones ---------- */
-  #razon-caja{
-    background:var(--white);border-radius:18px;padding:36px 24px;
-    box-shadow:0 6px 20px rgba(255,143,163,.25);
-    max-width:520px;margin:0 auto 24px;font-size:1.2rem;font-family:'Dancing Script',cursive;color:var(--pink-strong);
-    min-height:90px;display:flex;align-items:center;justify-content:center;
-  }
-  .razones-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:34px;}
-  .razon-card{
-    background:var(--white);border-radius:14px;padding:16px;font-size:.88rem;
-    box-shadow:0 4px 14px rgba(255,143,163,.18);
-  }
-
-  /* ---------- Música flotante ---------- */
-  #music-toggle{
-    position:fixed;bottom:24px;right:24px;z-index:200;
-    background:var(--pink-strong);color:#fff;border:none;
-    width:56px;height:56px;border-radius:50%;font-size:1.4rem;
-    box-shadow:0 8px 20px rgba(255,111,145,.45);cursor:pointer;
-  }
-
-  footer{
-    text-align:center;padding:40px 20px;font-size:.9rem;color:#a5637a;
-    position:relative;z-index:2;
-  }
-  footer .firma{font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--pink-strong);display:block;margin-top:6px;}
-</style>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-<div id="hearts-container"></div>
+<div id="hearts-container" aria-hidden="true"></div>
 
 <nav>
   <div class="logo">💕 Nosotros</div>
-  <button id="menu-toggle" aria-label="Menú">☰</button>
+  <button id="menu-toggle" aria-label="Abrir menú" aria-controls="nav-links" aria-expanded="false">☰</button>
   <div class="nav-links" id="nav-links">
     <a href="#inicio">Inicio</a>
     <a href="#nosotros">Nosotros</a>
     <a href="#cartas">Mensajes</a>
+    <a href="#karito">Karito escribe</a>
     <a href="#galeria">Fotos</a>
     <a href="#tiempo">Historia</a>
     <a href="#razones">Razones</a>
   </div>
 </nav>
 
+<main>
+<p id="page-status" class="page-status" role="status" hidden></p>
+<noscript><p class="page-status">Activa JavaScript para ver los recuerdos y escribir mensajes.</p></noscript>
 <!-- ================= HERO ================= -->
 <section id="inicio">
   <h1>Para Mi Amor</h1>
@@ -213,8 +51,34 @@
 <!-- ================= CARTAS / MENSAJES ================= -->
 <section id="cartas">
   <h2 class="section-title">Mensajes para ti</h2>
-  <p class="section-sub">Haz clic en cada una para leerla completa</p>
+  <p class="section-sub">Pulsa «Leer completo» para descubrir cada mensaje</p>
   <div class="cartas-grid" id="cartas-grid"></div>
+</section>
+
+<section id="karito" aria-labelledby="karito-title">
+  <h2 class="section-title" id="karito-title">Un pedacito de ti</h2>
+  <p class="section-sub">Karito, este espacio es tuyo. Escribe una carta, un recuerdo o lo que quieras compartir. 💌</p>
+  <form id="message-form" class="message-form">
+    <h3 id="editor-title">Escribe algo bonito</h3>
+    <label for="message-title">Título</label>
+    <input id="message-title" name="titulo" maxlength="120" required placeholder="Un recuerdo que quiero guardar">
+    <label for="message-body">Tu mensaje</label>
+    <textarea id="message-body" name="texto" rows="7" maxlength="10000" required placeholder="Aquí puedes escribir a tu manera…" aria-describedby="storage-note"></textarea>
+    <p class="author-preview">Con tu firma: <strong>Escrito por Karito 💗</strong></p>
+    <div class="editor-actions">
+      <button class="btn" type="submit" id="save-message">Guardar mensaje</button>
+      <button class="secondary-btn" type="button" id="cancel-edit" hidden>Cancelar edición</button>
+    </div>
+    <p id="storage-note" class="storage-note">Tus mensajes se guardan en este navegador. No se comparten automáticamente con otros dispositivos. Descarga una copia para conservarlos si cambias de navegador o borras sus datos.</p>
+  </form>
+  <div class="backup-actions">
+    <button type="button" class="secondary-btn" id="export-messages">Descargar mis mensajes</button>
+    <button type="button" class="secondary-btn" id="import-messages">Importar una copia</button>
+    <input type="file" id="import-file" accept=".json,application/json" hidden>
+  </div>
+  <p id="message-status" class="message-status" role="status" aria-live="polite"></p>
+  <p id="empty-messages" class="empty-messages">Tu primera historia empieza aquí. Cada mensaje llevará tu firma. ✨</p>
+  <div id="karito-messages" class="personal-messages"></div>
 </section>
 
 <!-- ================= GALERÍA ================= -->
@@ -236,180 +100,22 @@
 <section id="razones">
   <h2 class="section-title">Razones por las que te amo</h2>
   <p class="section-sub">Presiona el botón cuantas veces quieras</p>
-  <div id="razon-caja">Presiona el botón para descubrir una razón 💕</div>
+  <div id="razon-caja" aria-live="polite">Presiona el botón para descubrir una razón 💕</div>
   <button class="btn" id="btn-razon">Dame una razón</button>
   <div class="razones-grid" id="razones-grid"></div>
 </section>
 
-<footer>
+</main>
+<footer class="site-footer">
   Hecho con todo mi cariño para ti.
   <span class="firma">Tu Amor 💗</span>
   <span class="firma">pd: recibirás actualizaciones porqué nuestra historia es y será para la eternidad</span>
 </footer>
 
-<audio id="bg-music" loop src="musica/cancion.mp3"></audio>
-<button id="music-toggle" title="Reproducir música">🎵</button>
+<audio id="bg-music" loop preload="none" src="musica/cancion.mp3"></audio>
+<button id="music-toggle" title="Reproducir música" aria-label="Reproducir música" aria-pressed="false">🎵</button>
 
-<script>
-/* =========================================================
-   ✏️ ZONA DE PERSONALIZACIÓN — edita solo lo de aquí abajo
-   ========================================================= */
-const CONFIG = {
-  // Fecha en que empezaron a salir (año-mes-día)
-  fechaInicio: "2024-06-03T00:00:00",
-
-  // Cartas / mensajes. Agrega tantos objetos como quieras.
-  cartas: [
-    { titulo: "Para cuando estés triste", texto: "Si en este momento algo te tiene el corazón pesado, quiero que sepas que no estás sola. Respira, yo estoy aquí, y todo lo que sientes es válido. Te amo incluso — y sobre todo — en tus días difíciles." },
-    { titulo: "Para cuando estés feliz", texto: "Me encanta imaginarte sonriendo mientras lees esto. Tu felicidad es una de mis cosas favoritas en el mundo, y quiero seguir siendo parte de cada motivo que te haga sonreír." },
-    { titulo: "Para un día cualquiera", texto: "No necesito una fecha especial para recordarte lo mucho que te quiero. Este mensaje es solo para eso: para un martes cualquiera, un miércoles aburrido o un domingo perezoso." },
-    { titulo: "Para cuando me extrañes", texto: "Aunque no esté a tu lado en este instante, quiero que sepas que pienso en ti más de lo que te imaginas. La distancia nunca ha sido rival para lo que siento." }
-  ],
-
-  // Momentos importantes de la relación
-  timeline: [
-    { fecha: "26 de abril de 2024", titulo: "Nuestro primer hola", texto: "Me acuerdo que te pedí tu número por Teams, mientras eras practicante y yo el super gestor jsjasja, recuerdo que gracias a que dije que hablar por Teams se me hacía raro, esto iba para una historia bonita." },
-    { fecha: "1 de mayo de 2024", titulo: "Nuestra primera cita", texto: "Me acuerdo que estaba nervioso, me sentía ansioso y a la vez feliz, ya que la salida fue algo improvisado, gran parte de esta cita, fue algo que salió muy repentido, me acuerdo que quisimos ir al centro a un museo, pero estaba cerrado, luego terminamos en la feria del libro y ahí te tomé la primera foto de las miles que tenemos a día de hoy. Aparte que me tocó pedir moto en un lugar que no conocía con el celular a punto de apagarse JAKSJDKS experiencia única en la vida, JUNTO A ESTO, RECUERDO EL ESTADO QUE ME TIRASTE Y LE TOMÉ CAPTURA JAJAJ , FALSA." },
-    { fecha: "3 de mayo de 2024", titulo: "la primera canción'", texto: "Recuerdo que ese día te acompañé hasta tú casa luego de trabajar, nos fuimos en el Ali, luego de dejarte y de que yo huniese sido un paranoico por el lugar, te envié paint THE sky, de lil yatchy, después de decir Karen Andrea, usted es divina. Luego de esto, te empecé a acompañar más seguido a tu casita" },
-    { fecha: "13 de mayo de 2024", titulo: "Salidita al Jardin botanico y el nacimiento de nuestro hijo aguacate", texto: "Ese dia fue especial, ya que nuestra conexión cada día era más linda, única y genuina, la cual me hacía sentirme el hombre más feliz de todos. Recuerdo haberte dado el peluche y ver tu cara de felicidad., para luego caminar todo el parque, hablando mucho y enamorandome más." },
-    { fecha: "3 de junio de 2024", titulo: "El sí", texto: "Por fin se dió nuestra salida al museo, donde te pude llevar las flores, me acuerdo tanto que te pusiste muy feliz y estabas contenta, tanto que subiste un estado de ello, diciendo que te dieron flores, luego compramos unas manillitas y te di la cartita en el nuestro, donde dijiste que sí. <3" },
-    { fecha: "23 de junio de 2024", titulo: "tu partido de Voley", texto: "Recuerdo que ese día madrugé como nunca luego de trabajar JKASJD, para poderte llevar a un partido tuyo de voley en el norte. Donde el agua llegaba pidiendo agua, que a la final ganaron si mal no estoy." },
-    { fecha: "1 de julio de 2024", titulo: "Nuestro salida a Salitre Magico", texto: "Este día fue especial porque estuvimos todo el día super energicos, subiendonos a todo hasta a lo que más miedo nos daba, pero siempre juntitos." },
-    { fecha: "12 de agosto de 2024", titulo: "tu primera florecita", texto: "Recuerdo venir bajando del peatonal, donde vi unas flores lidisimas, echas a mano, al cual te regalé. El resto es historia contigo y las florecitas. <3" },
-    { fecha: "13 de octubre de 2024", titulo: "Salida al SOFA (?)", texto: "Este día fue super chistos, porque no teníamos un plan en concreto y yo terminé resolviendo como de costumbre, donde vimos muchas cosas de otakis, pero vimos umas figuras de Finn Y Jake." },
-    { fecha: "27 de octubre", titulo: "tú cadenita", texto: "Si mi memoria no me falla, te regalé una de las cadenitas que tanto te gustan y sigues usando a día de hoy. <3" },
-    { fecha: "31 de octubre de 2024", titulo: "Tu anillito", texto: "Ese día fue lindismo, ya que te regalé varias cositas, para luego de ello darte el anillito, el cual te había prometido." },
-    { fecha: "1 de noviembre de 2024", titulo: "Legos", texto: "Recuerdo que vi que estaban vendiendo figuritas de legos para combinar, y compré 3 pares para poder tenerlos contigoooooooooooooooooo. <3" },
-    { fecha: "4 de noviembre de 2024", titulo: "Salidita al circo", texto: "Me acuerdo que nos fuimos todos chuscos arreglados para esta salida, en la cual pudimos ver a los hermanos gasca, donde usé la camarita y nos tomamos unas fotos bellas, donde estuvimos juntos, siendo felices y acompañados." },
-    { fecha: "9 de noviembre de 2024", titulo: "Matrimonio de mis papis", texto: "Pudimos estar allí y celebrar un momento tan importante para ellos. Donde conociste a mi famlia, a mis amigos y por lo mpás hermso de todo, pudimos saber como es este proceso para cuando sea nuestra hour" },
-    { fecha: "10 de noviembre de 2024", titulo: "Nuestra salida a la granjita", texto: "Fue muy lindo este día, porque alimentamos a ovejas, cerditos, patitos, vimos una cabraa, un caballo, un burro, " },
-    { fecha: "21 de diciembre de 2024", titulo: "Nuestro viaje a Boyacá", texto: "Nuestros inicios de viajecitos juntos, donde conocimos pueblitos hermosos, compartimos busitos navideños juntitos, comiendo natilla y tomandote fotitos a mi cielito precioso" },
-    { fecha: "24/25 de diciembre de 2024", titulo: "navidadddd y post navidad", texto: "Recuerdo tanto que querías unos Air Pods porqué los tuyos se dañaron :(, y yo como buen novio, te adelanté tu navidad un día antes, cuando salí de trabajar de noche, para entregartelos y que tu me dieras un unboxing de estoooooooooos, para luego el gran día de navidad, donde te di un busito, unos aretes, una camisa y tus cadenitas hermosaaaaaaaaaaaas. " },
-  ],
-
-  // Razones por las que la amas (se muestran al azar)
-  razones: [
-    "Por tu forma de reír, que hace mejor cualquier día.",
-    "Porque me escuchas incluso cuando no digo nada.",
-    "Por tu paciencia infinita conmigo.",
-    "Porque haces que lo simple se sienta especial.",
-    "Por cómo cuidas a las personas que amas.",
-    "Por tu manera única de ver el mundo.",
-    "Porque a tu lado puedo ser yo mismo(a) sin miedo.",
-    "Por cada mensaje que me alegra el día.",
-    "Porque tu abrazo se siente como un hogar.",
-    "Por tu fuerza incluso en los días difíciles.",
-    "Porque me inspiras a ser mejor persona.",
-    "Por todos los pequeños detalles que tienes conmigo."
-  ],
-
-  // Cuántas casillas de fotos mostrar en la galería
-  totalFotos: 8
-};
-/* ============ FIN DE LA ZONA DE PERSONALIZACIÓN ============ */
-
-// ---------- Corazones flotantes de fondo ----------
-const heartsContainer = document.getElementById('hearts-container');
-function crearCorazon(){
-  const heart = document.createElement('div');
-  heart.className = 'heart';
-  heart.textContent = ['💗','💕','💖','💞'][Math.floor(Math.random()*4)];
-  heart.style.left = Math.random()*100 + 'vw';
-  heart.style.fontSize = (1 + Math.random()*1.5) + 'rem';
-  const duracion = 6 + Math.random()*6;
-  heart.style.animationDuration = duracion + 's';
-  heartsContainer.appendChild(heart);
-  setTimeout(()=> heart.remove(), duracion*1000);
-}
-setInterval(crearCorazon, 800);
-
-// ---------- Menú móvil ----------
-document.getElementById('menu-toggle').addEventListener('click', () => {
-  document.getElementById('nav-links').classList.toggle('open');
-});
-document.querySelectorAll('.nav-links a').forEach(a => {
-  a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open'));
-});
-
-// ---------- Contador de tiempo juntos ----------
-const inicio = new Date(CONFIG.fechaInicio).getTime();
-function actualizarContador(){
-  const ahora = Date.now();
-  let diff = Math.max(0, ahora - inicio);
-  const dias = Math.floor(diff / 86400000);
-  const horas = Math.floor((diff % 86400000) / 3600000);
-  const min = Math.floor((diff % 3600000) / 60000);
-  const seg = Math.floor((diff % 60000) / 1000);
-  document.getElementById('c-dias').textContent = dias;
-  document.getElementById('c-horas').textContent = horas;
-  document.getElementById('c-min').textContent = min;
-  document.getElementById('c-seg').textContent = seg;
-}
-actualizarContador();
-setInterval(actualizarContador, 1000);
-
-// ---------- Cartas ----------
-const cartasGrid = document.getElementById('cartas-grid');
-CONFIG.cartas.forEach(c => {
-  const div = document.createElement('div');
-  div.className = 'carta';
-  div.innerHTML = `<h3>${c.titulo}</h3><p>${c.texto}</p><span class="ver-mas">Toca para leer más</span>`;
-  div.addEventListener('click', () => {
-    div.classList.toggle('abierta');
-    div.querySelector('.ver-mas').textContent = div.classList.contains('abierta') ? 'Toca para cerrar' : 'Toca para leer más';
-  });
-  cartasGrid.appendChild(div);
-});
-
-// ---------- Galería ----------
-const galeriaGrid = document.getElementById('galeria-grid');
-for(let i=1; i<=CONFIG.totalFotos; i++){
-  const box = document.createElement('div');
-  box.className = 'foto-box';
-  box.innerHTML = `<img src="img/foto${i}.jpg" alt="Recuerdo ${i}">`;
-  const img = box.querySelector('img');
-  img.addEventListener('error', () => box.classList.add('no-photo'));
-  galeriaGrid.appendChild(box);
-}
-
-// ---------- Línea del tiempo ----------
-const timelineEl = document.getElementById('timeline');
-CONFIG.timeline.forEach(t => {
-  const item = document.createElement('div');
-  item.className = 'timeline-item';
-  item.innerHTML = `<div class="fecha">${t.fecha}</div><h3>${t.titulo}</h3><p>${t.texto}</p>`;
-  timelineEl.appendChild(item);
-});
-
-// ---------- Razones ----------
-const razonCaja = document.getElementById('razon-caja');
-document.getElementById('btn-razon').addEventListener('click', () => {
-  const r = CONFIG.razones[Math.floor(Math.random()*CONFIG.razones.length)];
-  razonCaja.style.opacity = 0;
-  setTimeout(()=>{ razonCaja.textContent = r; razonCaja.style.transition='opacity .4s'; razonCaja.style.opacity = 1; }, 150);
-});
-const razonesGrid = document.getElementById('razones-grid');
-CONFIG.razones.slice(0,6).forEach(r => {
-  const card = document.createElement('div');
-  card.className = 'razon-card';
-  card.textContent = r;
-  razonesGrid.appendChild(card);
-});
-
-// ---------- Música de fondo ----------
-const audio = document.getElementById('bg-music');
-const musicBtn = document.getElementById('music-toggle');
-let sonando = false;
-musicBtn.addEventListener('click', () => {
-  if(!sonando){
-    audio.play().then(()=>{ sonando = true; musicBtn.textContent = '⏸'; })
-                .catch(()=>{ alert('Agrega un archivo de música en la carpeta "musica" llamado cancion.mp3 para activar esta función.'); });
-  } else {
-    audio.pause();
-    sonando = false;
-    musicBtn.textContent = '🎵';
-  }
-});
-</script>
+<script src="js/storage.js" defer></script>
+<script src="js/app.js" defer></script>
 </body>
 </html>

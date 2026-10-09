@@ -7,8 +7,8 @@
         {
             "type": "msedge",
             "request": "launch",
-            "name": "Open Index.html",
-            "file": "${workspaceFolder}/Index.html"
+            "name": "Open index.html",
+            "file": "${workspaceFolder}/index.html"
         }
     ]
 }

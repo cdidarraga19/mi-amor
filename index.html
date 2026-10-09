@@ -113,9 +113,38 @@
 </footer>
 
 <audio id="bg-music" loop preload="none" src="musica/cancion.mp3"></audio>
-<button id="music-toggle" title="Reproducir música" aria-label="Reproducir música" aria-pressed="false">🎵</button>
+<aside id="music-panel" class="music-panel" aria-labelledby="music-title" hidden>
+  <div class="music-heading">
+    <h2 id="music-title">Nuestra música 💕</h2>
+    <button id="music-close" class="secondary-btn" type="button" aria-label="Cerrar controles de música">✕</button>
+  </div>
+  <label for="music-source">¿Qué escuchamos?</label>
+  <select id="music-source">
+    <option value="local">Nuestra canción</option>
+    <option value="spotify">Playlist de Spotify</option>
+  </select>
+  <div id="local-player">
+    <button id="local-play" class="secondary-btn" type="button" aria-pressed="false">Reproducir canción</button>
+    <div class="volume-heading"><label for="music-volume">Volumen</label><output id="volume-value" for="music-volume">50 %</output></div>
+    <input id="music-volume" type="range" min="0" max="100" step="1" value="50" aria-describedby="volume-help">
+    <p id="volume-help" class="music-note">Si tu celular no permite cambiarlo aquí, usa sus botones de volumen.</p>
+  </div>
+  <div id="spotify-player" hidden>
+    <form id="spotify-form">
+      <label for="spotify-url">Enlace de tu playlist</label>
+      <input id="spotify-url" type="url" required placeholder="https://open.spotify.com/playlist/…">
+      <button class="secondary-btn" type="submit">Cargar playlist</button>
+    </form>
+    <div id="spotify-embed"></div>
+    <a id="spotify-link" class="spotify-link" target="_blank" rel="noopener noreferrer" hidden>Abrir en Spotify ↗</a>
+    <p class="music-note">Pulsa reproducir en Spotify. Ajusta el volumen desde tu dispositivo. La reproducción disponible depende de Spotify y puede limitarse a fragmentos.</p>
+  </div>
+  <p id="music-status" class="music-note" role="status"></p>
+</aside>
+<button id="music-toggle" title="Abrir música" aria-label="Abrir controles de música" aria-controls="music-panel" aria-expanded="false">🎵</button>
 
 <script src="js/storage.js" defer></script>
+<script src="js/music.js" defer></script>
 <script src="js/app.js" defer></script>
 </body>
 </html>

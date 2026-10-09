@@ -19,25 +19,6 @@ $('menu-toggle').addEventListener('click', () => {
 });
 document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', closeMenu));
 document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
-const audio = $('bg-music');
-const musicButton = $('music-toggle');
-function updateMusic() {
-  const label = audio.paused ? 'Reproducir música' : 'Pausar música';
-  musicButton.textContent = audio.paused ? '🎵' : '⏸';
-  musicButton.title = label;
-  musicButton.setAttribute('aria-label', label);
-  musicButton.setAttribute('aria-pressed', String(!audio.paused));
-}
-audio.addEventListener('play', updateMusic);
-audio.addEventListener('pause', updateMusic);
-musicButton.addEventListener('click', async () => {
-  if (!audio.paused) return audio.pause();
-  try { await audio.play(); }
-  catch {
-    $('page-status').hidden = false;
-    $('page-status').textContent = 'No pudimos reproducir la canción. Intenta de nuevo en un momento.';
-  }
-});
 
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   setInterval(() => {

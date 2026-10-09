@@ -1,4 +1,4 @@
-/* Formato compartido por el navegador y las copias JSON. */
+/* Almacenamiento de los mensajes de Karito. Conserva la clave existente. */
 const KaritoStorage = (() => {
   const key = 'mi-amor.karito.mensajes.v1';
   function validate(messages) {
@@ -24,10 +24,5 @@ const KaritoStorage = (() => {
     localStorage.setItem(key, JSON.stringify(clean));
     return clean;
   }
-  function parseBackup(raw) {
-    const backup = JSON.parse(raw);
-    if (backup.version !== 1 || backup.app !== 'mi-amor') throw new Error('Copia no válida');
-    return validate(backup.mensajes);
-  }
-  return { read, write, parseBackup };
+  return { read, write };
 })();

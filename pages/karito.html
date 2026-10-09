@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karito escribe · Para Mi Cielito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body data-root="../" data-page="karito">
+
+<div id="hearts-container" aria-hidden="true"></div>
+
+<nav>
+  <a class="logo" href="../index.html" aria-label="Volver al inicio">💕 Nosotros</a>
+  <button id="menu-toggle" aria-label="Abrir menú" aria-controls="nav-links" aria-expanded="false">☰</button>
+  <div class="nav-links" id="nav-links">
+    <a href="../index.html">Inicio</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="mensajes.html">Mensajes</a>
+    <a href="karito.html" aria-current="page">Karito escribe</a>
+    <a href="fotos.html">Fotos</a>
+    <a href="historia.html">Historia</a>
+    <a href="razones.html">Razones</a>
+  </div>
+</nav>
+
+<main>
+<p id="page-status" class="page-status" role="status" hidden></p>
+<noscript><p class="page-status">Activa JavaScript para ver los recuerdos y escribir mensajes.</p></noscript>
+<section id="karito" aria-labelledby="karito-title">
+  <h1 class="section-title" id="karito-title">Un pedacito de ti</h1>
+  <p class="section-sub">Karito, este espacio es tuyo. Escribe una carta, un recuerdo o lo que quieras compartir. 💌</p>
+  <form id="message-form" class="message-form">
+    <h3 id="editor-title">Escribe algo bonito</h3>
+    <label for="message-title">Título</label>
+    <input id="message-title" name="titulo" maxlength="120" required placeholder="Un recuerdo que quiero guardar">
+    <label for="message-body">Tu mensaje</label>
+    <textarea id="message-body" name="texto" rows="7" maxlength="10000" required placeholder="Aquí puedes escribir a tu manera…"></textarea>
+    <p class="author-preview">Con tu firma: <strong>Escrito por Karito 💗</strong></p>
+    <div class="editor-actions">
+      <button class="btn" type="submit" id="save-message">Guardar mensaje</button>
+      <button class="secondary-btn" type="button" id="cancel-edit" hidden>Cancelar edición</button>
+    </div>
+  </form>
+  <p id="message-status" class="message-status" role="status" aria-live="polite"></p>
+  <p id="empty-messages" class="empty-messages">Tu primera historia empieza aquí. Cada mensaje llevará tu firma. ✨</p>
+  <div id="karito-messages" class="personal-messages"></div>
+</section>
+</main>
+<footer class="site-footer">
+  Hecho con todo mi cariño para ti.
+  <span class="firma">Tu Amor 💗</span>
+  <span class="firma">pd: recibirás actualizaciones porqué nuestra historia es y será para la eternidad</span>
+</footer>
+
+<dialog id="message-access" class="access-dialog" aria-labelledby="access-title" aria-describedby="access-description">
+  <form id="access-form">
+    <h2 id="access-title">Confirma con tu contraseña</h2>
+    <p id="access-description"></p>
+    <label for="access-password">Contraseña</label>
+    <input id="access-password" type="password" inputmode="numeric" autocomplete="off" required aria-describedby="access-error">
+    <p id="access-error" class="access-error" role="alert"></p>
+    <div class="editor-actions">
+      <button id="access-confirm" class="btn" type="submit">Confirmar</button>
+      <button id="access-cancel" class="secondary-btn" type="button">Cancelar</button>
+    </div>
+  </form>
+</dialog>
+
+<audio id="bg-music" loop preload="none" src="../musica/cancion.mp3"></audio>
+<aside id="music-panel" class="music-panel" aria-labelledby="music-title" hidden>
+  <div class="music-heading">
+    <h2 id="music-title">Nuestra música 💕</h2>
+    <button id="music-close" class="secondary-btn" type="button" aria-label="Cerrar controles de música">✕</button>
+  </div>
+  <label for="music-source">¿Qué escuchamos?</label>
+  <select id="music-source">
+    <option value="local">Nuestra canción</option>
+    <option value="spotify">Playlist de Spotify</option>
+  </select>
+  <div id="local-player">
+    <button id="local-play" class="secondary-btn" type="button" aria-pressed="false">Reproducir canción</button>
+    <div class="volume-heading"><label for="music-volume">Volumen</label><output id="volume-value" for="music-volume">50 %</output></div>
+    <input id="music-volume" type="range" min="0" max="100" step="1" value="50" aria-describedby="volume-help">
+    <p id="volume-help" class="music-note">Si tu celular no permite cambiarlo aquí, usa sus botones de volumen.</p>
+  </div>
+  <div id="spotify-player" hidden>
+    <div id="spotify-embed"></div>
+    <a id="spotify-link" class="spotify-link" target="_blank" rel="noopener noreferrer" hidden>Abrir en Spotify ↗</a>
+    <p class="music-note">Pulsa reproducir en Spotify. Ajusta el volumen desde tu dispositivo. La reproducción disponible depende de Spotify y puede limitarse a fragmentos.</p>
+  </div>
+  <p id="music-status" class="music-note" role="status"></p>
+</aside>
+<button id="music-toggle" title="Abrir música" aria-label="Abrir controles de música" aria-controls="music-panel" aria-expanded="false">🎵</button>
+
+<script src="../js/app.js" defer></script>
+<script src="../js/music.js" defer></script>
+<script src="../js/storage.js" defer></script>
+<script src="../js/access.js" defer></script>
+<script src="../js/karito.js" defer></script>
+</body>
+</html>

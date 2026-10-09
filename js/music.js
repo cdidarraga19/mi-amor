@@ -24,7 +24,7 @@
   }
   function persist() {
     try {
-      localStorage.setItem(key, JSON.stringify({ playlist, source: source.value, volume: Number(volume.value) }));
+      localStorage.setItem(key, JSON.stringify({ source: source.value, volume: Number(volume.value) }));
     } catch {
       get('music-status').textContent = 'Puedes escuchar música, pero no pudimos recordar tus preferencias en este navegador.';
     }
@@ -95,40 +95,20 @@
     renderSource();
     persist();
   });
-  get('spotify-url').addEventListener('input', () => {
-    interacted = true;
-    get('spotify-url').setCustomValidity('');
-  });
-  get('spotify-form').addEventListener('submit', event => {
-    event.preventDefault();
-    const input = get('spotify-url');
-    const url = playlistURL(input.value.trim());
-    input.setCustomValidity(url ? '' : 'Pega el enlace completo de una playlist de open.spotify.com/playlist/.');
-    if (!input.reportValidity()) return;
-    interacted = true;
-    playlist = url;
-    input.value = url;
-    renderSource();
-    get('music-status').textContent = 'Playlist seleccionada. Usa su botón de reproducción; si no carga, pulsa «Abrir en Spotify».';
-    persist();
-  });
 
   setVolume(saved.volume);
-  playlist = playlistURL(saved.playlist);
   source.value = saved.source === 'spotify' ? 'spotify' : 'local';
-  get('spotify-url').value = playlist;
   renderSource();
-  fetch('json/musica.json')
+  fetch((document.body.dataset.root || '') + 'json/musica.json')
     .then(response => { if (!response.ok) throw new Error('Configuración no disponible'); return response.json(); })
     .then(config => {
-      if (interacted) return;
-      if (typeof saved.volume !== 'number') setVolume(config.volumenInicial);
-      if (!playlist) {
-        playlist = playlistURL(config.spotifyPlaylist);
-        get('spotify-url').value = playlist;
-        if (playlist && !saved.source) source.value = 'spotify';
-        renderSource();
-      }
+      if (!interacted && typeof saved.volume !== 'number') setVolume(config.volumenInicial);
+      playlist = playlistURL(config.spotifyPlaylist);
+      if (!playlist) throw new Error('Playlist no válida');
+      if (!interacted && !saved.source) source.value = 'spotify';
+      if (source.value === 'spotify') renderSource();
     })
-    .catch(() => { /* La canción y la selección manual funcionan sin configuración. */ });
+    .catch(() => {
+      get('music-status').textContent = 'No pudimos cargar la playlist. Recarga la página para intentarlo de nuevo; nuestra canción sigue disponible.';
+    });
 })();

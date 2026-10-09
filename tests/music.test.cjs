@@ -26,7 +26,7 @@ async function setup(saved = null) {
   };
   let stored = saved;
   vm.runInNewContext(code, {
-    document: { getElementById: get, createElement: node, addEventListener() {} },
+    document: { body: { dataset: { root: '../' } }, getElementById: get, createElement: node, addEventListener() {} },
     localStorage: { getItem: () => stored, setItem: (key, value) => { stored = value; } },
     URL, fetch: async () => ({ ok: true, json: async () => config })
   });
@@ -62,13 +62,11 @@ test('el volumen controla el audio, incluye silencio y se conserva', async () =>
   assert.equal(restored.get('music-source').value, 'local');
 });
 
-test('rechaza enlaces ajenos y acepta enlaces de Spotify con parámetros', async () => {
-  const { get, emit, stored } = await setup();
-  get('spotify-url').value = 'https://example.com/playlist/27r1fgMBYEDofv0Fc3E1tI';
-  emit('spotify-form', 'submit');
-  assert(get('spotify-url').validationMessage);
-  get('spotify-url').value = config.spotifyPlaylist + '?si=example';
-  emit('spotify-form', 'submit');
-  assert.equal(get('spotify-url').validationMessage, '');
-  assert.equal(stored().playlist, config.spotifyPlaylist);
+test('usa la playlist fija aunque haya una selección antigua guardada', async () => {
+  const { get, emit, stored } = await setup(JSON.stringify({
+    source: 'spotify', playlist: 'https://example.com/playlist/27r1fgMBYEDofv0Fc3E1tI'
+  }));
+  assert.equal(get('spotify-link').href, config.spotifyPlaylist);
+  emit('music-source', 'change');
+  assert.equal(stored().playlist, undefined);
 });

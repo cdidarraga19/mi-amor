@@ -8,7 +8,7 @@ http.createServer((req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     const parts = pathname.split(/[\\/]/).filter(Boolean);
-    if (parts.some(part => part.startsWith('.')) || (parts.length && !['index.html', 'css', 'js', 'json', 'img', 'musica'].includes(parts[0]))) {
+    if (parts.some(part => part.startsWith('.')) || (parts.length && !['index.html', 'pages', 'css', 'js', 'json', 'img', 'musica'].includes(parts[0]))) {
       res.writeHead(403).end(); return;
     }
     filename = path.resolve(root, '.' + (pathname === '/' ? '/index.html' : pathname));

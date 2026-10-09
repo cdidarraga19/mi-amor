@@ -80,7 +80,7 @@
   }
   .btn:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(255,111,145,.5);}
 
-  h2.section-title{font-size:2.4rem;color:var(--pink-strong);margin-bottom:8px;}
+  .section-title{font-size:2.4rem;color:var(--pink-strong);margin-bottom:8px;}
   .section-sub{margin-bottom:40px;color:#8a6070;font-size:.95rem;}
 
   /* ---------- Contador ---------- */
@@ -165,11 +165,30 @@
   .site-footer .firma{font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--pink-strong);display:block;margin-top:6px;}
 
 /* Escritura de Karito y accesibilidad */
+.nav-links a[aria-current="page"]{color:#a94366;text-decoration:underline;text-underline-offset:6px;}
+body[data-page="inicio"] #inicio{min-height:65vh;padding:125px 20px 50px;}
+.home-catalog{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;max-width:1000px;margin:0 auto;padding:0 20px 50px;}
+.catalog-card{display:block;padding:26px;border:1px solid var(--pink-soft);border-radius:18px;background:var(--white);box-shadow:0 6px 20px #ff8fa326;transition:transform .2s;}
+.catalog-card:hover{transform:translateY(-4px);}
+.catalog-card h2{font-size:1.8rem;color:#a94366;margin-bottom:10px;}
+.catalog-card p{font-size:.9rem;line-height:1.7;}
+.catalog-card span{display:block;margin-top:16px;font-size:.85rem;font-weight:600;color:#a94366;}
+body:not([data-page="inicio"]) main{min-height:65vh;}
+@media(max-width:720px){.home-catalog{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:480px){.home-catalog{grid-template-columns:minmax(0,1fr);}}
+.access-dialog{margin:auto;width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow-y:auto;padding:28px;border:1px solid var(--pink-soft);border-radius:20px;background:var(--white);color:var(--plum);box-shadow:0 15px 60px #5a335044;}
+.access-dialog::backdrop{background:#30172c88;}
+.access-dialog h2{font-size:1.9rem;margin-bottom:12px;}
+.access-dialog p{font-size:.9rem;line-height:1.6;overflow-wrap:anywhere;}
+.access-dialog label{display:block;margin:18px 0 8px;font-weight:600;}
+.access-dialog input{width:100%;padding:12px;border:1px solid #c98da2;border-radius:10px;background:#fff;color:var(--plum);font-size:1rem;}
+.access-error{color:#a32245;min-height:1.6em;margin:8px 0 16px;}
+.delete-message{color:#a32245;border-color:#b6687d;}
 .music-panel{position:fixed;right:24px;bottom:92px;z-index:200;width:min(380px,calc(100vw - 32px));max-height:calc(100dvh - 115px);overflow-y:auto;padding:20px;border:1px solid var(--pink-soft);border-radius:20px;background:var(--white);box-shadow:0 8px 35px #5a335033;}
 .music-heading,.volume-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .music-heading h2{font-size:1.7rem;}
 .music-panel label{display:block;margin:14px 0 8px;font-size:.85rem;font-weight:600;}
-.music-panel select,.music-panel input[type="url"]{width:100%;min-width:0;border:1px solid #c98da2;border-radius:10px;padding:10px;background:#fff;color:var(--plum);font:inherit;font-size:1rem;}
+.music-panel select{width:100%;min-width:0;border:1px solid #c98da2;border-radius:10px;padding:10px;background:#fff;color:var(--plum);font:inherit;font-size:1rem;}
 .music-panel .secondary-btn{margin-top:12px;}
 .music-heading .secondary-btn{margin:0;padding:6px 12px;}
 #music-volume{width:100%;accent-color:#a94366;cursor:pointer;min-height:30px;}
@@ -194,11 +213,9 @@ section{scroll-margin-top:65px;}
 .message-form input,.message-form textarea{display:block;width:100%;border:1px solid #c98da2;border-radius:12px;padding:13px 15px;color:var(--plum);background:#fff;}
 .message-form textarea{resize:vertical;min-height:160px;line-height:1.7;}
 .author-preview{font-size:.85rem;margin:16px 0;color:#79475e;}
-.editor-actions,.backup-actions,.message-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
-.backup-actions{justify-content:center;margin:24px 0 12px;}
+.editor-actions,.message-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
 .secondary-btn{border:1px solid #c98da2;background:var(--white);color:#743750;border-radius:24px;padding:10px 18px;cursor:pointer;font-size:.88rem;}
 .secondary-btn:hover{background:var(--pink-light);}
-.storage-note{font-size:.8rem;color:#795564;line-height:1.7;margin-top:20px;}
 .message-status{max-width:700px;margin:16px auto;color:#743750;font-size:.9rem;}
 .empty-messages{padding:30px 12px;color:#795564;font-size:.9rem;}
 .personal-messages{display:grid;gap:22px;max-width:700px;margin:24px auto 0;text-align:left;}

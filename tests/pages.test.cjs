@@ -1,0 +1,72 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const root = path.join(__dirname, '..');
+const pages = ['index.html', ...fs.readdirSync(path.join(root, 'pages')).map(file => 'pages/' + file)];
+const read = file => fs.readFileSync(path.join(root, file), 'utf8');
+
+test('las siete páginas tienen enlaces y recursos válidos, con su sección activa', () => {
+  assert.equal(pages.length, 7);
+  for (const page of pages) {
+    const html = read(page);
+    assert.equal([...html.matchAll(/<section\b/g)].length, 1, page);
+    assert.equal([...html.matchAll(/<h1\b/g)].length, 1, page);
+    assert.equal([...html.matchAll(/aria-current="page"/g)].length, 1, page);
+    const ids = [...html.matchAll(/id="([^"]+)"/g)].map(match => match[1]);
+    assert.equal(ids.length, new Set(ids).size, page);
+    const nav = html.match(/<div class="nav-links"[\s\S]*?<\/div>/)[0];
+    assert.equal([...nav.matchAll(/<a /g)].length, 7, page);
+    for (const [, target] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
+      if (target.startsWith('https://')) continue;
+      assert(fs.existsSync(path.resolve(root, path.dirname(page), target)), `${page}: ${target}`);
+    }
+    for (const [, references] of html.matchAll(/aria-(?:describedby|labelledby|controls)="([^"]+)"/g)) {
+      for (const id of references.split(' ')) assert(ids.includes(id), `${page}: ${id}`);
+    }
+  }
+  assert(!read('index.html').includes('js/content.js'));
+  assert(!read('index.html').includes('js/karito.js'));
+  const karito = read('pages/karito.html');
+  for (const removed of ['export-messages', 'import-messages', 'import-file', 'storage-note']) assert(!karito.includes(removed));
+});
+
+const config = JSON.parse(read('json/contenido.json'));
+for (const [page, container, expected] of [
+  ['nosotros', 'contador-caja', null], ['mensajes', 'cartas-grid', config.cartas.length],
+  ['fotos', 'galeria-grid', config.totalFotos], ['historia', 'timeline', config.timeline.length],
+  ['razones', 'razones-grid', 6]
+]) {
+  test(`carga ${page} sin depender de elementos de otros catálogos`, async () => {
+    function node() {
+      return { children: [], textContent: '', hidden: true, events: {},
+        addEventListener(type, fn) { this.events[type] = fn; }, setAttribute() {},
+        append(...children) { this.children.push(...children); },
+        appendChild(child) { this.children.push(child); }, classList: { add() {} }
+      };
+    }
+    const html = read(`pages/${page}.html`);
+    const nodes = new Map([...html.matchAll(/id="([^"]+)"/g)].map(match => [match[1], node()]));
+    vm.runInNewContext(read('js/content.js'), {
+      $: id => nodes.get(id) || null,
+      element(tag, cls, text) { return Object.assign(node(), { textContent: text }); },
+      document: { body: { dataset: { root: '../' } } },
+      fetch: async url => {
+        assert.equal(url, '../json/contenido.json');
+        return { ok: true, json: async () => config };
+      }, setInterval() {}, Date, Math
+    });
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(nodes.get('page-status').hidden, true);
+    if (expected !== null) assert.equal(nodes.get(container).children.length, expected);
+    else assert(Number(nodes.get('c-dias').textContent) > 0);
+    if (page === 'fotos') {
+      for (const box of nodes.get(container).children) assert(fs.existsSync(path.resolve(root, 'pages', box.children[0].src)));
+    }
+    if (page === 'razones') {
+      nodes.get('btn-razon').events.click();
+      assert(config.razones.includes(nodes.get('razon-caja').textContent));
+    }
+  });
+}

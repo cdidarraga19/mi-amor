@@ -20,15 +20,11 @@ test('guarda y recupera textos, saltos de línea y firma fija', () => {
   api.write([{ ...message, titulo: 'Editado' }]);
   assert.equal(api.read()[0].titulo, 'Editado');
 });
-test('valida copias y rechaza textos vacíos, fechas inválidas y duplicados', () => {
+test('rechaza textos vacíos, fechas inválidas y duplicados al guardar', () => {
   const api = storage();
-  const backup = mensajes => JSON.stringify({ app: 'mi-amor', version: 1, mensajes });
-  assert.equal(api.parseBackup(backup([message])).length, 1);
   for (const invalid of [[{ ...message, texto: '  ' }], [{ ...message, fecha: 'ayer' }], [message, message], [{ ...message, titulo: 'a'.repeat(121) }]]) {
-    assert.throws(() => api.parseBackup(backup(invalid)));
+    assert.throws(() => api.write(invalid));
   }
-  assert.throws(() => api.parseBackup('{'));
-  assert.throws(() => api.parseBackup('{"version":2}'));
 });
 test('informa datos dañados y errores de almacenamiento sin fingir guardado', () => {
   assert.throws(() => storage('{').read());

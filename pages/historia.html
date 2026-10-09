@@ -3,43 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inicio · Para Mi Cielito</title>
+<title>Historia · Para Mi Cielito</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="../css/styles.css">
 </head>
-<body data-root="" data-page="inicio">
+<body data-root="../" data-page="tiempo">
 
 <div id="hearts-container" aria-hidden="true"></div>
 
 <nav>
-  <a class="logo" href="index.html" aria-label="Volver al inicio">💕 Nosotros</a>
+  <a class="logo" href="../index.html" aria-label="Volver al inicio">💕 Nosotros</a>
   <button id="menu-toggle" aria-label="Abrir menú" aria-controls="nav-links" aria-expanded="false">☰</button>
   <div class="nav-links" id="nav-links">
-    <a href="index.html" aria-current="page">Inicio</a>
-    <a href="pages/nosotros.html">Nosotros</a>
-    <a href="pages/mensajes.html">Mensajes</a>
-    <a href="pages/karito.html">Karito escribe</a>
-    <a href="pages/fotos.html">Fotos</a>
-    <a href="pages/historia.html">Historia</a>
-    <a href="pages/razones.html">Razones</a>
+    <a href="../index.html">Inicio</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="mensajes.html">Mensajes</a>
+    <a href="karito.html">Karito escribe</a>
+    <a href="fotos.html">Fotos</a>
+    <a href="historia.html" aria-current="page">Historia</a>
+    <a href="razones.html">Razones</a>
   </div>
 </nav>
 
 <main>
 <p id="page-status" class="page-status" role="status" hidden></p>
 <noscript><p class="page-status">Activa JavaScript para ver los recuerdos y escribir mensajes.</p></noscript>
-<section id="inicio">
-  <h1>Para Mi Amor</h1>
-  <p>Este pequeño rincón del internet existe solo para recordarte, en cualquier momento que lo necesites, todo lo que significas para mí.</p>
-  <a href="pages/nosotros.html" class="btn">Descúbrelo 💌</a>
+<section id="tiempo">
+  <h1 class="section-title">Nuestra historia</h1>
+  <p class="section-sub">Los momentos que más recuerdo</p>
+  <div class="timeline" id="timeline"></div>
 </section>
-<div class="home-catalog" aria-label="Explora nuestros recuerdos"><a class="catalog-card" href="pages/nosotros.html"><h2>Nosotros</h2><p>Cada día a tu lado cuenta.</p><span>Entrar →</span></a>
-<a class="catalog-card" href="pages/mensajes.html"><h2>Mensajes</h2><p>Palabras para acompañarte.</p><span>Entrar →</span></a>
-<a class="catalog-card" href="pages/karito.html"><h2>Karito escribe</h2><p>Un espacio para tus propias palabras.</p><span>Entrar →</span></a>
-<a class="catalog-card" href="pages/fotos.html"><h2>Fotos</h2><p>Nuestros momentos en fotografías.</p><span>Entrar →</span></a>
-<a class="catalog-card" href="pages/historia.html"><h2>Historia</h2><p>Así hemos escrito nuestra historia.</p><span>Entrar →</span></a>
-<a class="catalog-card" href="pages/razones.html"><h2>Razones</h2><p>Siempre hay una razón más para amarte.</p><span>Entrar →</span></a></div>
 </main>
 <footer class="site-footer">
   Hecho con todo mi cariño para ti.
@@ -47,7 +41,7 @@
   <span class="firma">pd: recibirás actualizaciones porqué nuestra historia es y será para la eternidad</span>
 </footer>
 
-<audio id="bg-music" loop preload="none" src="musica/cancion.mp3"></audio>
+<audio id="bg-music" loop preload="none" src="../musica/cancion.mp3"></audio>
 <aside id="music-panel" class="music-panel" aria-labelledby="music-title" hidden>
   <div class="music-heading">
     <h2 id="music-title">Nuestra música 💕</h2>
@@ -73,8 +67,8 @@
 </aside>
 <button id="music-toggle" title="Abrir música" aria-label="Abrir controles de música" aria-controls="music-panel" aria-expanded="false">🎵</button>
 
-<script src="js/app.js" defer></script>
-<script src="js/music.js" defer></script>
-
+<script src="../js/app.js" defer></script>
+<script src="../js/music.js" defer></script>
+<script src="../js/content.js" defer></script>
 </body>
 </html>

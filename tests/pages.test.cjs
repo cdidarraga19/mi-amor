@@ -4,11 +4,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const root = path.join(__dirname, '..');
-const pages = ['index.html', ...fs.readdirSync(path.join(root, 'pages')).map(file => 'pages/' + file)];
+const pages = ['index.html', ...fs.readdirSync(path.join(root, 'pages')).filter(file => file !== 'fotos.html').map(file => 'pages/' + file)];
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
-test('las siete páginas tienen enlaces y recursos válidos, con su sección activa', () => {
-  assert.equal(pages.length, 7);
+test('las seis páginas tienen enlaces y recursos válidos, con su sección activa', () => {
+  assert.equal(pages.length, 6);
   for (const page of pages) {
     const html = read(page);
     assert.equal([...html.matchAll(/<section\b/g)].length, 1, page);
@@ -17,7 +17,8 @@ test('las siete páginas tienen enlaces y recursos válidos, con su sección act
     const ids = [...html.matchAll(/id="([^"]+)"/g)].map(match => match[1]);
     assert.equal(ids.length, new Set(ids).size, page);
     const nav = html.match(/<div class="nav-links"[\s\S]*?<\/div>/)[0];
-    assert.equal([...nav.matchAll(/<a /g)].length, 7, page);
+    assert.equal([...nav.matchAll(/<a /g)].length, 6, page);
+    assert(!html.includes('href="fotos.html"') && !html.includes('href="pages/fotos.html"'), page);
     for (const [, target] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
       if (target.startsWith('https://')) continue;
       assert(fs.existsSync(path.resolve(root, path.dirname(page), target)), `${page}: ${target}`);
@@ -32,10 +33,17 @@ test('las siete páginas tienen enlaces y recursos válidos, con su sección act
   for (const removed of ['export-messages', 'import-messages', 'import-file', 'storage-note']) assert(!karito.includes(removed));
 });
 
+test('el enlace anterior de fotos lleva al libro', () => {
+  const html = read('pages/fotos.html');
+  assert(html.includes('http-equiv="refresh" content="0; url=nosotros.html#memory-book"'));
+  assert(html.includes('href="nosotros.html#memory-book"'));
+  assert(!html.includes('galeria-grid'));
+});
+
 const config = JSON.parse(read('json/contenido.json'));
 for (const [page, container, expected] of [
   ['nosotros', 'contador-caja', null], ['mensajes', 'cartas-grid', config.cartas.length],
-  ['fotos', 'galeria-grid', config.totalFotos], ['historia', 'timeline', config.timeline.length],
+  ['historia', 'timeline', config.timeline.length],
   ['razones', 'razones-grid', 6]
 ]) {
   test(`carga ${page} sin depender de elementos de otros catálogos`, async () => {
@@ -61,8 +69,41 @@ for (const [page, container, expected] of [
     assert.equal(nodes.get('page-status').hidden, true);
     if (expected !== null) assert.equal(nodes.get(container).children.length, expected);
     else assert(Number(nodes.get('c-dias').textContent) > 0);
-    if (page === 'fotos') {
-      for (const box of nodes.get(container).children) assert(fs.existsSync(path.resolve(root, 'pages', box.children[0].src)));
+    if (page === 'nosotros') {
+      const bookPages = nodes.get('book-pages').children;
+      assert.equal(bookPages.length, config.totalFotos);
+      assert.equal(nodes.get('memory-book').hidden, false);
+      const photos = bookPages.map(page => page.children[0].children[0].src);
+      assert.equal(new Set(photos).size, config.totalFotos);
+      for (const photo of photos) assert(fs.existsSync(path.resolve(root, 'pages', photo)));
+      const checkPage = index => {
+        assert.equal(bookPages.filter(page => !page.hidden).length, 1);
+        assert.equal(bookPages[index].hidden, false);
+        assert.equal(nodes.get('book-position').textContent, `Página ${index + 1} de ${config.totalFotos}`);
+        assert.equal(nodes.get('book-prev').disabled, index === 0);
+        assert.equal(nodes.get('book-next').disabled, index === config.totalFotos - 1);
+      };
+      checkPage(0);
+      nodes.get('book-prev').events.click();
+      checkPage(0);
+      for (let i = 1; i < config.totalFotos; i++) {
+        nodes.get('book-next').events.click();
+        checkPage(i);
+      }
+      nodes.get('book-next').events.click();
+      checkPage(config.totalFotos - 1);
+      let prevented = false;
+      nodes.get('memory-book').events.keydown({ key: 'ArrowLeft', preventDefault() { prevented = true; } });
+      assert(prevented);
+      checkPage(config.totalFotos - 2);
+      for (let i = config.totalFotos - 3; i >= 0; i--) {
+        nodes.get('book-prev').events.click();
+        checkPage(i);
+      }
+      const [img, fallback] = bookPages[0].children[0].children;
+      img.events.error();
+      assert.equal(img.hidden, true);
+      assert.equal(fallback.hidden, false);
     }
     if (page === 'razones') {
       nodes.get('btn-razon').events.click();

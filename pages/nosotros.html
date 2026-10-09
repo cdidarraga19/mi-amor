@@ -20,7 +20,6 @@
     <a href="nosotros.html" aria-current="page">Nosotros</a>
     <a href="mensajes.html">Mensajes</a>
     <a href="karito.html">Karito escribe</a>
-    <a href="fotos.html">Fotos</a>
     <a href="historia.html">Historia</a>
     <a href="razones.html">Razones</a>
   </div>
@@ -30,8 +29,19 @@
 <p id="page-status" class="page-status" role="status" hidden></p>
 <noscript><p class="page-status">Activa JavaScript para ver los recuerdos y escribir mensajes.</p></noscript>
 <section id="nosotros">
-  <h1 class="section-title">Nuestro tiempo juntos</h1>
-  <p class="section-sub">Desde el día en que todo comenzó ✨</p>
+  <h1 class="section-title">El libro de nosotros</h1>
+  <p class="section-sub">Nuestros recuerdos, una página a la vez ✨</p>
+  <div class="memory-book" id="memory-book" role="region" aria-label="Libro de nuestros recuerdos" aria-describedby="book-help" tabindex="0" hidden>
+    <div class="book-pages" id="book-pages"></div>
+    <div class="book-controls">
+      <button class="secondary-btn" id="book-prev" type="button" aria-controls="book-pages" disabled>← Anterior</button>
+      <p id="book-position" role="status" aria-live="polite" aria-atomic="true"></p>
+      <button class="secondary-btn" id="book-next" type="button" aria-controls="book-pages">Siguiente →</button>
+    </div>
+  </div>
+  <p class="book-help" id="book-help">Pasa las páginas con los botones o con las flechas del teclado al seleccionar el libro.</p>
+  <h2 class="together-title">Nuestro tiempo juntos</h2>
+  <p class="section-sub">Desde el día en que todo comenzó</p>
   <div id="contador-caja">
     <div class="contador-item"><span id="c-dias">0</span><small>DÍAS</small></div>
     <div class="contador-item"><span id="c-horas">0</span><small>HORAS</small></div>
@@ -39,8 +49,6 @@
     <div class="contador-item"><span id="c-seg">0</span><small>SEGUNDOS</small></div>
   </div>
 </section>
-</main>
-<center><h1>Esta pagina se sigue creando, paciencia por favor</h1></center>
 </main>
 <footer class="site-footer">
   Hecho con todo mi cariño para ti.

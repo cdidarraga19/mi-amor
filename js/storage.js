@@ -12,7 +12,7 @@ const KaritoStorage = (() => {
         throw new Error('Mensaje no válido');
       }
       ids.add(message.id);
-      return { id: message.id, titulo: message.titulo.trim(), texto: message.texto.trim(), fecha: message.fecha, autor: 'Karito' };
+      return { id: message.id, titulo: message.titulo.trim(), texto: message.texto.trim(), fecha: message.fecha, autor: message.autor === 'Tu Amor' ? 'Tu Amor' : 'Karito' };
     });
   }
   function read() {

@@ -3,73 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fotos · Para Mi Cielito</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta http-equiv="refresh" content="0; url=nosotros.html#memory-book">
+<title>Nuestro libro · Para Mi Cielito</title>
 <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body data-root="../" data-page="galeria">
-
-<div id="hearts-container" aria-hidden="true"></div>
-
-<nav>
-  <a class="logo" href="../index.html" aria-label="Volver al inicio">💕 Nosotros</a>
-  <button id="menu-toggle" aria-label="Abrir menú" aria-controls="nav-links" aria-expanded="false">☰</button>
-  <div class="nav-links" id="nav-links">
-    <a href="../index.html">Inicio</a>
-    <a href="nosotros.html">Nosotros</a>
-    <a href="mensajes.html">Mensajes</a>
-    <a href="karito.html">Karito escribe</a>
-    <a href="fotos.html" aria-current="page">Fotos</a>
-    <a href="historia.html">Historia</a>
-    <a href="razones.html">Razones</a>
-  </div>
-</nav>
-
-<main>
-<p id="page-status" class="page-status" role="status" hidden></p>
-<noscript><p class="page-status">Activa JavaScript para ver los recuerdos y escribir mensajes.</p></noscript>
-<section id="galeria">
-  <h1 class="section-title">Nuestros momentos</h1>
-  <p class="section-sub">Una colección de recuerdos</p>
-  <div class="galeria-grid" id="galeria-grid"></div>
-
-</section>
-</main>
-<footer class="site-footer">
-  Hecho con todo mi cariño para ti.
-  <span class="firma">Tu Amor 💗</span>
-  <span class="firma">pd: recibirás actualizaciones porqué nuestra historia es y será para la eternidad</span>
-</footer>
-
-<audio id="bg-music" loop preload="none" src="../musica/cancion.mp3"></audio>
-<aside id="music-panel" class="music-panel" aria-labelledby="music-title" hidden>
-  <div class="music-heading">
-    <h2 id="music-title">Nuestra música 💕</h2>
-    <button id="music-close" class="secondary-btn" type="button" aria-label="Cerrar controles de música">✕</button>
-  </div>
-  <label for="music-source">¿Qué escuchamos?</label>
-  <select id="music-source">
-    <option value="local">Nuestra canción</option>
-    <option value="spotify">Playlist de Spotify</option>
-  </select>
-  <div id="local-player">
-    <button id="local-play" class="secondary-btn" type="button" aria-pressed="false">Reproducir canción</button>
-    <div class="volume-heading"><label for="music-volume">Volumen</label><output id="volume-value" for="music-volume">50 %</output></div>
-    <input id="music-volume" type="range" min="0" max="100" step="1" value="50" aria-describedby="volume-help">
-    <p id="volume-help" class="music-note">Si tu celular no permite cambiarlo aquí, usa sus botones de volumen.</p>
-  </div>
-  <div id="spotify-player" hidden>
-    <div id="spotify-embed"></div>
-    <a id="spotify-link" class="spotify-link" target="_blank" rel="noopener noreferrer" hidden>Abrir en Spotify ↗</a>
-    <p class="music-note">Pulsa reproducir en Spotify. Ajusta el volumen desde tu dispositivo. La reproducción disponible depende de Spotify y puede limitarse a fragmentos.</p>
-  </div>
-  <p id="music-status" class="music-note" role="status"></p>
-</aside>
-<button id="music-toggle" title="Abrir música" aria-label="Abrir controles de música" aria-controls="music-panel" aria-expanded="false">🎵</button>
-
-<script src="../js/app.js" defer></script>
-<script src="../js/music.js" defer></script>
-<script src="../js/content.js" defer></script>
+<body>
+<main><p class="page-status">Nuestras fotos ahora están en <a href="nosotros.html#memory-book">el libro de nosotros</a>.</p></main>
 </body>
 </html>

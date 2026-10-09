@@ -119,5 +119,15 @@
     "Porque me inspiras a ser mejor persona.",
     "Por todos los pequeños detalles que tienes conmigo."
   ],
-  "totalFotos": 8
+  "totalFotos": 8,
+  "libro": [
+    { "titulo": "La niña más linda de todas ", "texto": "Eres la persona que más amor en el mundo, lo más bello y hermoso de mi vida, la que me hace feliz" },
+    { "titulo": "Mi lugar favorito", "texto": "Hay fotos que guardan mucho más que un instante: guardan lo bonito que se siente estar a tu lado." },
+    { "titulo": "Pequeños momentos", "texto": "Los detalles más sencillos se convierten en recuerdos enormes cuando los comparto contigo." },
+    { "titulo": "Tu sonrisa", "texto": "Si pudiera guardar algo para siempre, sería esa felicidad que me da tenerte cerca." },
+    { "titulo": "Juntitos", "texto": "Quiero seguir coleccionando momentos contigo, de esos que nos hacen sonreír cada vez que los recordamos." },
+    { "titulo": "Lo bonito de nosotros", "texto": "Cada foto es una pequeña ventana a todo el cariño que seguimos construyendo." },
+    { "titulo": "Un recuerdo más", "texto": "Qué bonito tener estas páginas para volver a nuestros momentos y recordar cuánto te quiero." },
+    { "titulo": "Esto apenas comienza", "texto": "Este libro todavía tiene muchísimas páginas por escribir. Quiero llenarlas de fotos, aventuras y vida contigo." }
+  ]
 }

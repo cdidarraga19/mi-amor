@@ -20,7 +20,6 @@
     <a href="nosotros.html">Nosotros</a>
     <a href="mensajes.html">Mensajes</a>
     <a href="karito.html" aria-current="page">Karito escribe</a>
-    <a href="fotos.html">Fotos</a>
     <a href="historia.html">Historia</a>
     <a href="razones.html">Razones</a>
   </div>
@@ -31,21 +30,30 @@
 <noscript><p class="page-status">Activa JavaScript para ver los recuerdos y escribir mensajes.</p></noscript>
 <section id="karito" aria-labelledby="karito-title">
   <h1 class="section-title" id="karito-title">Un pedacito de ti</h1>
-  <p class="section-sub">Karito, este espacio es tuyo. Escribe una carta, un recuerdo o lo que quieras compartir. 💌</p>
+  <p class="section-sub">Un espacio para los dos. Sus cartas y recuerdos, juntos desde cualquier dispositivo. 💌</p>
   <form id="message-form" class="message-form">
     <h3 id="editor-title">Escribe algo bonito</h3>
     <label for="message-title">Título</label>
     <input id="message-title" name="titulo" maxlength="120" required placeholder="Un recuerdo que quiero guardar">
     <label for="message-body">Tu mensaje</label>
     <textarea id="message-body" name="texto" rows="7" maxlength="10000" required placeholder="Aquí puedes escribir a tu manera…"></textarea>
-    <p class="author-preview">Con tu firma: <strong>Escrito por Karito 💗</strong></p>
+    <label for="message-author">¿Quién escribe?</label>
+    <select id="message-author" name="autor">
+      <option value="Karito">Karito 💗</option>
+      <option value="Tu Amor">Tu Amor 💗</option>
+    </select>
     <div class="editor-actions">
-      <button class="btn" type="submit" id="save-message">Guardar mensaje</button>
+      <button class="btn" type="submit" id="save-message" disabled>Guardar mensaje</button>
       <button class="secondary-btn" type="button" id="cancel-edit" hidden>Cancelar edición</button>
     </div>
   </form>
   <p id="message-status" class="message-status" role="status" aria-live="polite"></p>
-  <p id="empty-messages" class="empty-messages">Tu primera historia empieza aquí. Cada mensaje llevará tu firma. ✨</p>
+  <p id="sync-status" class="message-status"></p>
+  <div class="shared-actions">
+    <button id="refresh-messages" class="secondary-btn" type="button" disabled>Actualizar mensajes</button>
+    <button id="migrate-messages" class="secondary-btn" type="button" hidden>Compartir mensajes de este navegador</button>
+  </div>
+  <p id="empty-messages" class="empty-messages" hidden>Su primera historia empieza aquí. Cada mensaje llevará su firma. ✨</p>
   <div id="karito-messages" class="personal-messages"></div>
 </section>
 </main>
@@ -60,7 +68,7 @@
     <h2 id="access-title">Confirma con tu contraseña</h2>
     <p id="access-description"></p>
     <label for="access-password">Contraseña</label>
-    <input id="access-password" type="password" inputmode="numeric" autocomplete="off" required aria-describedby="access-error">
+    <input id="access-password" type="password" autocomplete="off" required aria-describedby="access-error">
     <p id="access-error" class="access-error" role="alert"></p>
     <div class="editor-actions">
       <button id="access-confirm" class="btn" type="submit">Confirmar</button>
@@ -98,6 +106,7 @@
 <script src="../js/app.js" defer></script>
 <script src="../js/music.js" defer></script>
 <script src="../js/storage.js" defer></script>
+<script src="../js/shared-storage.js" defer></script>
 <script src="../js/access.js" defer></script>
 <script src="../js/karito.js" defer></script>
 </body>

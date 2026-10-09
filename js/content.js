@@ -1,10 +1,70 @@
 'use strict';
 
+function renderBook(config) {
+  const book = $('memory-book');
+  const pages = [];
+  for (let i = 0; i < config.totalFotos; i++) {
+    const memory = (config.libro || [])[i] || {};
+    const page = element('article', 'book-page');
+    page.setAttribute('aria-label', 'Página ' + (i + 1));
+    const photo = element('figure', 'book-photo');
+    const img = element('img');
+    img.alt = memory.descripcionFoto || 'Nuestro recuerdo ' + (i + 1);
+    img.loading = i === 0 ? 'eager' : 'lazy';
+    img.src = (document.body.dataset.root || '') + 'img/foto' + (i + 1) + '.jpg';
+    const unavailable = element('p', 'book-photo-unavailable', 'No se pudo cargar esta foto. Intenta recargar la página.');
+    unavailable.hidden = true;
+    img.addEventListener('error', () => {
+      img.hidden = true;
+      unavailable.hidden = false;
+    });
+    photo.append(img, unavailable, element('figcaption', '', 'Un pedacito de nosotros · ' + String(i + 1).padStart(2, '0')));
+    const copy = element('div', 'book-copy');
+    copy.append(
+      element('p', 'book-kicker', 'Nuestro álbum de amor'),
+      element('h2', '', memory.titulo || 'Un recuerdo contigo'),
+      element('p', 'book-text', memory.texto || 'Una foto, un instante y otro recuerdo que quiero guardar contigo.'),
+      element('span', 'book-signature', 'Con todo mi amor'),
+      element('span', 'book-number', String(i + 1).padStart(2, '0'))
+    );
+    page.append(photo, copy);
+    page.hidden = i !== 0;
+    $('book-pages').appendChild(page);
+    pages.push(page);
+  }
+  if (!pages.length) {
+    $('book-help').textContent = 'Pronto llenaremos este libro con nuestros recuerdos.';
+    return;
+  }
+  let current = 0;
+  function showPage(index) {
+    if (index < 0 || index >= pages.length) return;
+    pages[current].hidden = true;
+    current = index;
+    pages[current].hidden = false;
+    $('book-prev').disabled = current === 0;
+    $('book-next').disabled = current === pages.length - 1;
+    $('book-position').textContent = 'Página ' + (current + 1) + ' de ' + pages.length;
+  }
+  $('book-prev').addEventListener('click', () => showPage(current - 1));
+  $('book-next').addEventListener('click', () => showPage(current + 1));
+  book.addEventListener('keydown', event => {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      showPage(current + (event.key === 'ArrowRight' ? 1 : -1));
+    }
+  });
+  showPage(0);
+  book.hidden = false;
+}
+
 async function loadContent() {
   try {
     const response = await fetch((document.body.dataset.root || '') + 'json/contenido.json');
     if (!response.ok) throw new Error('No se pudo cargar el contenido');
     const config = await response.json();
+    if ($('memory-book')) renderBook(config);
     if ($('contador-caja')) {
     const start = new Date(config.fechaInicio).getTime();
     function updateCounter() {
@@ -33,16 +93,6 @@ async function loadContent() {
       card.append(element('h3', '', letter.titulo), body, toggle);
       $('cartas-grid').appendChild(card);
     });
-    if ($('galeria-grid')) for (let i = 1; i <= config.totalFotos; i++) {
-      const box = element('div', 'foto-box');
-      const img = element('img');
-      img.alt = 'Nuestro recuerdo ' + i;
-      img.loading = 'lazy';
-      img.addEventListener('error', () => box.classList.add('no-photo'));
-      img.src = (document.body.dataset.root || '') + 'img/foto' + i + '.jpg';
-      box.appendChild(img);
-      $('galeria-grid').appendChild(box);
-    }
     if ($('timeline')) config.timeline.forEach(memory => {
       const item = element('article', 'timeline-item');
       item.append(element('div', 'fecha', memory.fecha), element('h3', '', memory.titulo), element('p', '', memory.texto));
